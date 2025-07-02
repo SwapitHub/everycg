@@ -1,0 +1,20 @@
+@extends($templatePath.'.shop_layout')
+
+@section('main')
+ <div class="col-md-10 width_int">
+            <div class="row g-0">
+                 <h2 class="title text-center">{{ $title }}</h2>
+        {!! sc_html_render($page->content) !!}
+            </div>
+        </div>
+
+@endsection
+
+@section('breadcrumb')
+    <div class="breadcrumbs">
+        <ol class="breadcrumb">
+          <li><a href="{{ route('home') }}">{{ trans('front.home') }}</a></li>
+          <li class="active">{{ $title }}</li>
+        </ol>
+      </div>
+@endsection

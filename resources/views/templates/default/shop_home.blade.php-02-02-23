@@ -1,0 +1,123 @@
+@extends($templatePath.'.shop_layout')
+
+@section('center')
+
+          <div class="col-md-10  width_int">            
+            <div class="slider-wrapper axis-horizontal home-section">
+                <ul class="slider animated">
+                  @if (!empty($slider))
+                  <?php $isl=0;
+                  foreach($slider as $slide) { ?>
+                     <div>
+                    <li class="">
+                      <div>
+                       <img src="{{ asset($slide->image) }}" alt="{{ $slide->image }}">
+                            <div class="carousel-caption home_slider"> 
+                              {!! sc_html_render($slide->html) !!}           
+                                
+                            
+                                <div class="shop-slider"><a href="{{ $slide->url }}">{{ $slide->url_text }}</a></div>
+                            </div>
+                          </div>
+                       
+                    </li>
+                     </div>
+                     <?php } ?>
+                    @endif
+                </ul>
+            </div>
+            <h3 class="FeaturedProducts">Featured Products</h3>
+            <div class="container-fluid py-2 FeaturedProductsPage">
+                <div class="row ">
+                   @foreach ($products_new as  $key => $product_new)
+                    <?php  $pname = App\Models\ProductFiles::getFileExt($product_new['id']); ?>
+
+                    <div class="col-6 col-md-3 with_hund_pt mt-3">
+                        <div class="com_cover_div">
+                            <a href="{{ $product_new->getUrl() }}">
+                            <div class="text-black featured_Products">
+                                <div class="featured_Products_image card ">
+                                    <img src="{{ asset($product_new->getThumb()) }}" alt="{{ $product_new->name }}">
+                                     <div class="Shop_now">
+                                   
+                                        <span class="pname">@php
+                                     echo strlen($pname) > 20 ? substr($pname,0,25)."..." : $pname;
+                                  @endphp</span> <span>  {!! $product_new->showPrice() !!} </span>
+                                        
+                                      </div>
+                                   
+                                </div>
+                            </div>
+                            </a>
+                            <div class="card-body">
+                                <div class="text-center">
+                                    <h5 class="card-title">@php
+                                     echo strlen($product_new->name) > 20 ? substr($product_new->name,0,20).".." : $product_new->name;
+                                  @endphp</h5>
+                                  <div class="pro-details">
+                                     <p class="show-detail">Details <i class="fa fa-angle-down"></i></p>
+                                     <div class="pro-content" style="display:none">
+                                      @php
+                                         echo substr($product_new->content, 0, 60).'...';
+                                      @endphp
+                                     </div>
+                                  </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach                    
+                   
+                </div>
+              <div class="show-all-link">
+                <a href="{{ route('product.all') }}">See all product</a>
+              </div>
+            </div>
+        </div>
+    
+
+
+@endsection
+
+
+
+@push('styles')
+@endpush
+
+@push('scripts')
+<script>
+    $(document).ready(function(){
+        
+        <?php $user = Auth::user();
+         if($user) {  ?>        
+              
+          var username = $("form#vendor-login input[name='username']").val();
+          var password = $("form#vendor-login input[name='password']").val();
+          $.ajax({
+              url:'{{ route('admin.login') }}',
+              type:'POST',
+              data:{username:username,password:password,"_token": "{{ csrf_token() }}"},
+              success: function(data){
+                   console.log('success');
+              }
+          });          
+         <?php } ?>
+
+        $('.shop-page').addClass('home-page');
+
+        $('.slider').slick({
+          dots: true,
+          arrows: true,
+          autoplay: true,
+          autoplaySpeed: 5000,
+          infinite: true,
+          speed: 500,
+          cssEase: 'linear',
+          slidesToShow: 1,
+          slidesToScroll: 1
+           
+        });
+  });
+</script>
+
+@endpush
