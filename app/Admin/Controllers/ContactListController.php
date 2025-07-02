@@ -465,13 +465,6 @@ Need mothod destroy to boot deleting in model
                              <input type="hidden" name="_token" value="' . csrf_token() . '">
                                 <div class="modal-body">
                                     <div class="from-group my-2">
-                                       <label for="">Choose List</label>
-                                       <select name="list" class="form-control" required>
-                                       <option value="">--select--</option>
-                                          ' . $optionHtml . '
-                                       </select>
-                                    </div>
-                                    <div class="from-group my-2" style="margin-top:10px">
                                        <label for="">upload Sheet</label>
                                        <input type="file" name="contact-file" required class="form-control" accept=".xls,.xlsx,.csv">
                                     </div>
@@ -604,7 +597,6 @@ Need mothod destroy to boot deleting in model
     {
         $dataOrigin = request()->all();
         $validator = Validator::make($dataOrigin, [
-            'list' => 'required',
             'contact-file' => 'required|mimes:xls,xlsx,.csv|max:100000',
         ]);
         Excel::import(new ContactImport, $request->file('contact-file'));
