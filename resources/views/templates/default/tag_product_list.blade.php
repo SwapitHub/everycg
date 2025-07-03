@@ -52,7 +52,8 @@
                    
                 </div>
                <ul class="pagination">
-                  {{ $products->appends(request()->except(['page','_token']))->links() }}
+                  {{-- {{ $products->appends(request()->except(['page','_token']))->links() }} --}}
+                   {{ $products->appends(request()->except(['page', '_token']))->links('pagination::bootstrap-4') }}
               </ul>
             </div>
         </div>
