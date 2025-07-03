@@ -46,7 +46,7 @@ class ContactListController extends Controller
             'check_row' => '',
             'id' => trans('customer.id'),
             'name' => 'List Name',
-            'email' => trans('customer.email'),
+            'company' => 'Company',
             'created_at' => trans('customer.created_at'),
             'updated_at' => trans('customer.updated_at'),
             'action' => trans('customer.admin.action'),
@@ -81,7 +81,7 @@ class ContactListController extends Controller
                 'check_row' => '<input type="checkbox" class="grid-row-checkbox" data-id="' . $row['id'] . '">',
                 'id' => $row['id'],
                 'name' => $row['name'],
-                'email' => $row['email'],
+                'Company' => $row['Company'],
                 'created_at' => $row['created_at'],
                 'updated_at' => $row['updated_at'],
                 'action' => '
@@ -175,9 +175,9 @@ class ContactListController extends Controller
     public function create()
     {
         $data = [
-            'title' => "Add Mailer Contact",
+            'title' => "Add mailer contact list",
             'sub_title' => '',
-            'title_description' => trans('customer.admin.add_new_des'),
+            'title_description' => 'Create new list',
             'icon' => 'fa fa-plus',
             'countries' => (new ShopCountry)->getList(),
             'customer' => [],
@@ -209,7 +209,8 @@ class ContactListController extends Controller
         }
 
         $dataInsert = [
-            'email' => $data['email'],
+            'email' => $data['email']??'',
+            'email_content' => $data['email_content'],
             'Company' => $data['company'],
             'name' => $data['name'],
             'state' => $data['state'],
@@ -231,9 +232,9 @@ class ContactListController extends Controller
             return 'no data';
         }
         $data = [
-            'title' => 'Edit Mailer Contact',
+            'title' => 'Edit Mailer Contact list',
             'sub_title' => '',
-            'title_description' => '',
+            'title_description' => 'Edit List',
             'icon' => 'fa fa-pencil-square-o',
             'customer' => $customer,
             'countries' => (new ShopCountry)->getList(),
@@ -248,7 +249,7 @@ class ContactListController extends Controller
      */
     public function postEdit($id)
     {
-        $customer = ShopUser::find($id);
+        $customer = MailerContact::find($id);
         $data = request()->all();
         $dataOrigin = request()->all();
         $validator = Validator::make($dataOrigin, [
@@ -264,14 +265,14 @@ class ContactListController extends Controller
         //Edit
 
         $dataUpdate = [
-            'email' => $data['email'],
+            'email' => $data['email']??'',
+            'email_content' => $data['email_content'],
             'name' => $data['name'],
             'Company' => $data['company'],
             'state' => $data['state'],
             'status' => empty($data['status']) ? 0 : 1,
         ];
         MailerContact::where('id', $id)->update($dataUpdate);
-        //
         return redirect()->route('mailer_contact.index')->with('success', trans('customer.admin.edit_success'));
     }
 
