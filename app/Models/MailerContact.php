@@ -2,24 +2,23 @@
 
 namespace App\Models;
 
-use App\Models\ShopEmailTemplate;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Laravel\Passport\HasApiTokens;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class MailerContact extends Authenticatable
+use App\Models\ContactListImport;
+
+class MailerContact extends Model
 {
-    use Notifiable, HasApiTokens;
+  /**
+   * The attributes that are mass assignable.
+   *
+   * @var array
+   */
+  protected $table = 'mailer_contact';
+  protected $guarded = [];
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-   protected $table = 'mailer_contact';
-   protected $guarded = [];
-
- 
- 
+  public function importedContacts()
+  {
+    return $this->hasMany(ContactListImport::class, 'list_id');
+  }
 }

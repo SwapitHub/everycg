@@ -16,4 +16,9 @@ class ContactListImport extends Model
     {
         return $this->belongsTo(MailerContact::class, 'list_id', 'id');
     }
+
+    public function mailerContact()
+    {
+        return $this->belongsTo(MailerContact::class, 'mailer_contact_id');
+    }
 }
