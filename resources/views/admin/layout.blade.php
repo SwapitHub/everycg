@@ -126,6 +126,8 @@
 {{-- sweetalert2 --}}
 <script src="{{ asset('admin/plugin/sweetalert2.all.min.js')}}"></script>
 <script src="{{ asset('admin/plugin/promise-polyfill.js')}}"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootbox@5.5.2/bootbox.min.js"></script>
 <script>
    $(document).on('change', '.image, .sub_image, .avatar, .add-more-img', function() {
        var replit = $(this).val(); 

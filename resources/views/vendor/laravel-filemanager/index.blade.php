@@ -284,8 +284,8 @@
       headers: {
         'Authorization': 'Bearer ' + getUrlParam('token')
       },
-      acceptedFiles: "{{ implode(',', $helper->availableMimeTypes()) }}",
-      maxFilesize: ({{ $helper->maxUploadSize() }} / 1000)
+      acceptedFiles: "image/jpeg,image/png,image/jpg",
+      maxFilesize: 50
     }
   </script>
 </body>
