@@ -1,2 +1,5 @@
+# Track everything in this folder
 *
 !.gitignore
+!*/
+!*
